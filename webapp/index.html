@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>d3 | reusable heatmap calendar</title>
+  <meta name="author" content="Sundar Singh | eesur.com">
+
+  <link rel="stylesheet" href="main.css">
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+  <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+</head>
+<body>
+
+  <article>
+    <header>
+      <span id="info">info</span>
+    </header>
+    <div id="heatmap_container">
+      <section>
+        <h3>revant <span id="rev_max"></span></h3>
+        <section id="heatmap"></section>
+      </section>
+      <section>
+        <h3>soha <span id="soha_max"></span></h3>
+        <section id="heatmap2"></section>
+      </section>
+    </div>
+  </article>
+
+  <script> d3.eesur = {}; //namespace  </script>
+  <script src="d3_code_heatmap_cal.js"></script>
+  <script>
+  // *****************************************
+  // render chart
+  // *****************************************
+  (function() {
+      'use strict';
+
+      var nestedData;
+      var parseDate = d3.time.format('%m/%d/%y').parse;
+
+      // create chart
+      var heatChart = d3.eesur.heatmap()
+          .colourRangeStart('#FDBB30')
+          .colourRangeEnd('#EE3124')
+          .startYear('2016')
+          .endYear('2019')
+          .on('_hover', function (d, i) {
+              var f = d3.time.format('%B %d, %Y');
+              d3.select('#info')
+                  .text(function () {
+                      if(nestedData[d]==undefined){
+                        var noOfTexts = 0;
+                      }
+                      else {
+                        var noOfTexts = nestedData[d];
+                      }
+                      return 'date: ' + f(d) + ' | number of texts from revant: ' + noOfTexts;
+                  });
+          });
+
+
+      // apply after nesting data
+      d3.csv('./rev_count.csv', function(error, data) {
+
+          if (error) return console.warn(error);
+
+
+          var maxCount = 0;
+          var maxCountDate = null;
+
+          nestedData = d3.nest()
+              .key(function (d) {
+                return parseDate(d.date); })
+              .rollup(function (n) {
+                  var currCount = parseInt(n[0].count, 10);
+                  if(currCount > maxCount) {
+                    maxCount = currCount;
+                    var f = d3.time.format('%B %d, %Y');
+                    maxCountDate = f(parseDate(n[0].date));
+                  }
+                  return n[0].count;
+              })
+              .map(data);
+
+          var maxText = "Revant's max texts: " + maxCount + " on: " + maxCountDate;
+          $('#rev_max').text(maxText);
+
+
+
+          // render chart
+          d3.select('#heatmap')
+              .datum(nestedData)
+              .call(heatChart);
+
+      });
+
+  }());
+
+  d3.select(self.frameElement).style('height', '900px');
+
+  </script>
+
+  <script>
+  // *****************************************
+  // render chart
+  // *****************************************
+  (function() {
+      'use strict';
+
+      var nestedData;
+      var parseDate = d3.time.format('%m/%d/%y').parse;
+
+      // create chart
+      var heatChart = d3.eesur.heatmap()
+          .colourRangeStart('#96c93d')
+          .colourRangeEnd('#00b09b')
+          .startYear('2016')
+          .endYear('2019')
+          .on('_hover', function (d, i) {
+              var f = d3.time.format('%B %d, %Y');
+              d3.select('#info')
+                  .text(function () {
+                      if(nestedData[d]==undefined){
+                        var noOfTexts = 0;
+                      }
+                      else {
+                        var noOfTexts = nestedData[d];
+                      }
+                      return 'date: ' + f(d) + ' | number of texts from soha: ' + noOfTexts;
+                  });
+          });
+
+      // apply after nesting data
+      d3.csv('./soha_count.csv', function(error, data) {
+
+          if (error) return console.warn(error);
+
+          var maxCount = 0;
+          var maxCountDate = null;
+
+          nestedData = d3.nest()
+              .key(function (d) {
+                return parseDate(d.date); })
+              .rollup(function (n) {
+                  var currCount = parseInt(n[0].count, 10);
+                  if(currCount > maxCount) {
+                    maxCount = currCount;
+                    var f = d3.time.format('%B %d, %Y');
+                    maxCountDate = f(parseDate(n[0].date));
+                  }
+                  return n[0].count;
+              })
+              .map(data);
+
+          var maxText = "Soha's max texts: " + maxCount + " on: " + maxCountDate;
+          $('#soha_max').text(maxText);
+
+          // render chart
+          d3.select('#heatmap2')
+              .datum(nestedData)
+              .call(heatChart);
+
+      });
+
+  }());
+
+  d3.select(self.frameElement).style('height', '900px');
+
+  </script>
+</body>
+
+</html>

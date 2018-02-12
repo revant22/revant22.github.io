@@ -1,7 +1,8 @@
 @import url(http://fonts.googleapis.com/css?family=Source+Code+Pro:400,600);
 body {
-    font-family: "Source Code Pro", Consolas, monaco, monospace;
-    line-height: 1.5;
+  margin: 0;  
+  font-family: "Source Code Pro", Consolas, monaco, monospace;
+  line-height: 1.5;
   font-weight: 400;
 }
 .day {
@@ -21,32 +22,104 @@ body {
 .year-title {
   font-size: 18px;
   letter-spacing: 10px;
-  fill: #00B0DD;
+  fill: #070708;
+}
+#full_page {
+  display: flex;
+  background: url('lookingatyou_bg.png');
+  background-size: contain;
+  width: 100%;
+  background-position-x: -29px;
+  background-size: 102%;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  height: 100vh;
+}
+#wordcloud_container img {
+  align-content: center;
+  height: calc(80vh);
+}
+#wordcloud_container{
+  margin-left: auto;
+  margin-right: auto;
+  border: white 10px solid;
+  position: relative;
+  justify-content: stretch;
+  height: calc(80vh);
+}
+#overlay{
+  background: url('wordcloud.png') no-repeat;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size:contain;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+#overlay:hover {
+  opacity: 1;
+}
+#looking_at_you {
+  background: url('lookingatyou.jpg');
+  width: 100%;
+  height: 560px;
+  background-position-x: -29px;
+  background-size: 102%;
+}
+#rev_heatmap {
+  background: #f5e5cd;
+}
+#soha_heatmap {
+  background: #cdf5d0;
+}
+.info_container{
+  display: flex;
+  color: white;
+  padding: 15px 0;
+}
+.detail_icon{
+  margin-right: 10px;
+}
+.details{
+  border-left: white 2px solid;
+  padding-left: 10px;
+}
+.details span{
+  display: block;
+}
+.info_container h3{
+  font-size: 1.5em;
+  line-height: 1em;
+  margin: 0 15px;
+  text-transform: uppercase;
+}
+#rev_info{
+  background-color: #a45959;
+}
+#soha_info{
+  background-color: #70a470;
+}
+.heatmap {
+  padding: 10px;
 }
 #heatmap_container{
   display: flex;
-  margin-top: 50px;
 }
 #info {
-  position: absolute;
-  top: 10px;
-  left: 40px;
   font-size: 13px;
 }
 header {
-  position: fixed;
-  left: 0;
-  top: 0;
-  height: 33px;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
   width: 100%;
-  background: #ffff00;
   opacity: 0.9;
   z-index: 22;
-  background: #00B0DD;
+  background: #686868;
   color: white;
 }
 svg text {
   font-size: 11px;
   text-transform: uppercase;
-  fill: #00B0DD;
+  fill: #070708;
 }

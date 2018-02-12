@@ -3,31 +3,98 @@
 <head>
   <meta charset="utf-8">
   <title>d3 | reusable heatmap calendar</title>
-  <meta name="author" content="Sundar Singh | eesur.com">
+  <meta name="author" content="Revant Ohri">
 
   <link rel="stylesheet" href="main.css">
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
   <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-  <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.4/nv.d3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js" charset="utf-8"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
 </head>
 <body>
-
+  <section id="full_page">
+    <div id="wordcloud_container">
+      <div id="overlay"></div>
+      <img id="basepic" src="nola_pic.jpg"/>
+    </div>
+    <!-- <img id="wordcloud" src="wordcloud.png"/> -->
+  </section>
+  <div id="looking_at_you"></div>
   <article>
-    <header>
-      <span id="info">info</span>
-    </header>
     <div id="heatmap_container">
       <section>
-        <h3>revant <span id="rev_max"></span></h3>
-        <section id="heatmap"></section>
+        <section class="info_container " id="rev_info">
+          <h3>Revant</h3> 
+          <div class="details">
+            <div class="meta_details"></div>
+            <span id="rev_max"></span>
+          </div>
+        </section>
+        <section id="rev_heatmap" class="heatmap"></section>
       </section>
       <section>
-        <h3>soha <span id="soha_max"></span></h3>
-        <section id="heatmap2"></section>
+        <section class="info_container " id="soha_info">
+          <h3>Soha</h3> 
+          <div class="details">
+            <div class="meta_details"></div>
+            <span id="soha_max"></span>
+          </div>
+        </section>
+        <section id="soha_heatmap" class="heatmap"></section>
       </section>
     </div>
   </article>
+  <script type="text/javascript">
+    var jqxhr = $.getJSON( "data/meta_data.json", function() {
+      console.log( "success");
+      data = jqxhr.responseJSON;
+      Object.keys(data).forEach(function(key, index){
+        var selector = "#"+key+"_info .details .meta_details"
+        var nameProps = data[key]
+        console.log(selector)
+        Object.keys(nameProps).forEach(function(subkey, index){
+          var iconElem="<i class=\"fas detail_icon fa-angle-double-right\"></i>"
+          if(subkey=='links'){
+            iconElem = "<i class=\"fas detail_icon fa-link\"></i>"
+          }
+          else if(subkey=='images'){
+           iconElem = "<i class=\"fas detail_icon fa-image\"></i>" 
+          }
+          else if(subkey=='texts'){
+           iconElem = "<i class=\"fas detail_icon fa-comment\"></i>" 
+          }
+          else if(subkey=='gifs'){
+           iconElem = "<i class=\"fas detail_icon fa-film\"></i>" 
+          }
+          var newElemSelector = ""+key+"_"+subkey
+          console.log(newElemSelector)
+          $(selector).append("<span id=\""+newElemSelector+"\" class=\"icon icon-"+subkey+"\">"+iconElem+nameProps[subkey]+ " "+subkey+ "</span>");
+        })
+      })
+      // for(var name in data){
+      //   console.log("[[[[[[[]]]]]]]");
+      //   console.log(name, data[name])
+      //   for(var prop in name){
+
+      //     var selector = "#"+data[name]+"_info .details"
+      //     var newElemSelector = ""+data[name]+"_"+name[prop]
+      //     console.log(selector, newElemSelector)
+      //     // $(selector).append("<span id=\""+newElemSelector+"\">"+name[prop]+"</span>");
+      //   }
+      // }
+    });
+     
+
+
+
+    // Perform other work here ...
+     
+    // Set another completion function for the request above
+  </script>
+  <header>
+    <span id="info">info</span>
+  </header>
 
   <script> d3.eesur = {}; //namespace  </script>
   <script src="d3_code_heatmap_cal.js"></script>
@@ -63,8 +130,9 @@
 
 
       // apply after nesting data
-      d3.csv('./rev_count.csv', function(error, data) {
-
+      console.log('+++++++++ dshdshds');
+      d3.csv('./data/rev_count.csv', function(error, data) {
+          console.log('+++++++++ dshdshds', data);
           if (error) return console.warn(error);
 
 
@@ -85,13 +153,13 @@
               })
               .map(data);
 
-          var maxText = "Revant's max texts: " + maxCount + " on: " + maxCountDate;
+          var maxText = "max texts: " + maxCount + " on " + maxCountDate;
           $('#rev_max').text(maxText);
 
 
 
           // render chart
-          d3.select('#heatmap')
+          d3.select('#rev_heatmap')
               .datum(nestedData)
               .call(heatChart);
 
@@ -134,7 +202,7 @@
           });
 
       // apply after nesting data
-      d3.csv('./soha_count.csv', function(error, data) {
+      d3.csv('./data/soha_count.csv', function(error, data) {
 
           if (error) return console.warn(error);
 
@@ -155,11 +223,11 @@
               })
               .map(data);
 
-          var maxText = "Soha's max texts: " + maxCount + " on: " + maxCountDate;
+          var maxText = "max texts: " + maxCount + " on " + maxCountDate;
           $('#soha_max').text(maxText);
 
           // render chart
-          d3.select('#heatmap2')
+          d3.select('#soha_heatmap')
               .datum(nestedData)
               .call(heatChart);
 
@@ -170,6 +238,7 @@
   d3.select(self.frameElement).style('height', '900px');
 
   </script>
+
 </body>
 
 </html>

@@ -12,7 +12,7 @@
             endYear = 2018,
             colourRangeStart = '#fae9e9',
             colourRangeEnd = '#d62728',
-            width = 700,
+            width = 650,
             height = 400;
 
         var dispatch = d3.dispatch('_hover');

@@ -1,6 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Source+Code+Pro:400,600);
 body {
-  margin: 0;  
+  margin: 0;
   font-family: "Source Code Pro", Consolas, monaco, monospace;
   line-height: 1.5;
   font-weight: 400;
@@ -29,8 +29,6 @@ body {
   background: url('lookingatyou_bg.png');
   background-size: contain;
   width: 100%;
-  background-position-x: -29px;
-  background-size: 102%;
   padding-top: 30px;
   padding-bottom: 30px;
   height: 100vh;
@@ -60,11 +58,7 @@ body {
   opacity: 1;
 }
 #looking_at_you {
-  background: url('lookingatyou.jpg');
   width: 100%;
-  height: 560px;
-  background-position-x: -29px;
-  background-size: 102%;
 }
 #rev_heatmap {
   background: #f5e5cd;
@@ -77,6 +71,9 @@ body {
   color: white;
   padding: 15px 0;
 }
+.tongue-smiley:before {
+  content: ':P';
+}
 .detail_icon{
   margin-right: 10px;
 }
@@ -86,6 +83,9 @@ body {
 }
 .details span{
   display: block;
+}
+#main_container {
+  min-width: 600px
 }
 .info_container h3{
   font-size: 1.5em;
@@ -99,11 +99,19 @@ body {
 #soha_info{
   background-color: #70a470;
 }
-.heatmap {
-  padding: 10px;
-}
 #heatmap_container{
   display: flex;
+  margin-top: -7px;
+}
+.heatmap_holder{
+  width:49%;
+}
+.heatmap_holder:first-child{
+  width:51%;
+}
+.heatmap{
+  padding: 15px;
+  padding-left: 30px;
 }
 #info {
   font-size: 13px;

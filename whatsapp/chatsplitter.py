@@ -2,11 +2,23 @@ import re
 from collections import Counter
 import os
 import json
+from cleaner import cleanChatFunc
+
+cleanChatFunc()
 
 script_dir = os.path.dirname(__file__)
 
 names = ['soha', 'rev']
-meta_data_types = ['texts', 'images', 'links', 'gifs', 'videos', 'admissions of defeat', '`i love yous`', 'tongue out smileys', 'affectionate nicknames']
+meta_data_types = ['texts',
+'images',
+'links',
+'gifs',
+'videos',
+'admissions of defeat',
+'`i love yous`',
+'tongue out smileys',
+'affectionate nicknames',
+'songs']
 
 meta_data = {}
 
@@ -98,16 +110,18 @@ while line:
     message_type = 'videos'
   elif(re.search(url_pattern, message_payload) is not None):
     message_type = 'links'
+    if('spotify' in message_payload):
+      incrementMetaData('songs', name_prefix)
   else:
     message_type = 'texts'
 
     uncased_payload = message_payload.lower()
     for special_str in specialStrings:
       if any(concession_str in uncased_payload for concession_str in specialStrings[special_str]):
-        incrementMetaData(special_str, name_prefix)      
+        incrementMetaData(special_str, name_prefix)
 
   incrementMetaData(message_type, name_prefix)
-  
+
   currCounter.update({date: 1})
 
   if(message_type is 'texts'):

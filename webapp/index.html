@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>d3 | reusable heatmap calendar</title>
+  <title>You and You and You and You and Me</title>
   <meta name="author" content="Revant Ohri">
 
   <link rel="stylesheet" href="main.css">
@@ -13,38 +13,40 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
 </head>
 <body>
-  <section id="full_page">
-    <div id="wordcloud_container">
-      <div id="overlay"></div>
-      <img id="basepic" src="nola_pic.jpg"/>
-    </div>
-    <!-- <img id="wordcloud" src="wordcloud.png"/> -->
-  </section>
-  <div id="looking_at_you"></div>
-  <article>
-    <div id="heatmap_container">
-      <section>
-        <section class="info_container " id="rev_info">
-          <h3>Revant</h3> 
-          <div class="details">
-            <div class="meta_details"></div>
-            <span id="rev_max"></span>
-          </div>
+  <div id="main_container">
+    <section id="full_page">
+      <div id="wordcloud_container">
+        <div id="overlay"></div>
+        <img id="basepic" src="nola_pic.png"/>
+      </div>
+      <!-- <img id="wordcloud" src="wordcloud.png"/> -->
+    </section>
+    <img id="looking_at_you" src="lookingatyou.jpg"></div>
+    <article>
+      <div id="heatmap_container">
+        <section class="heatmap_holder">
+          <section class="info_container " id="rev_info">
+            <h3>Revant</h3>
+            <div class="details">
+              <div class="meta_details"></div>
+              <span id="rev_max"></span>
+            </div>
+          </section>
+          <section id="rev_heatmap" class="heatmap"></section>
         </section>
-        <section id="rev_heatmap" class="heatmap"></section>
-      </section>
-      <section>
-        <section class="info_container " id="soha_info">
-          <h3>Soha</h3> 
-          <div class="details">
-            <div class="meta_details"></div>
-            <span id="soha_max"></span>
-          </div>
+        <section class="heatmap_holder">
+          <section class="info_container " id="soha_info">
+            <h3>Soha</h3>
+            <div class="details">
+              <div class="meta_details"></div>
+              <span id="soha_max"></span>
+            </div>
+          </section>
+          <section id="soha_heatmap" class="heatmap"></section>
         </section>
-        <section id="soha_heatmap" class="heatmap"></section>
-      </section>
-    </div>
-  </article>
+      </div>
+    </article>
+  </div>
   <script type="text/javascript">
     var jqxhr = $.getJSON( "data/meta_data.json", function() {
       console.log( "success");
@@ -59,37 +61,41 @@
             iconElem = "<i class=\"fas detail_icon fa-link\"></i>"
           }
           else if(subkey=='images'){
-           iconElem = "<i class=\"fas detail_icon fa-image\"></i>" 
+           iconElem = "<i class=\"fas detail_icon fa-image\"></i>"
           }
           else if(subkey=='texts'){
-           iconElem = "<i class=\"fas detail_icon fa-comment\"></i>" 
+           iconElem = "<i class=\"fas detail_icon fa-comment\"></i>"
           }
-          else if(subkey=='gifs'){
-           iconElem = "<i class=\"fas detail_icon fa-film\"></i>" 
+          else if(subkey=='videos'){
+           iconElem = "<i class=\"fas detail_icon fa-film\"></i>"
+          }
+          else if(subkey=='`i love yous`'){
+           iconElem = "<i class=\"fas fa-heart detail_icon\"></i>"
+          }
+          else if(subkey=='songs'){
+           iconElem = "<i class=\"fas fa-music detail_icon\"></i>"
+          }
+          else if(subkey=='tongue out smileys'){
+           iconElem = "<i class=\"tongue-smiley detail_icon\"></i>"
+          }
+          else if(subkey=='admissions of defeat'){
+           iconElem = "<i class=\"fas fa-trophy detail_icon\"></i>"
+          }
+          else if(subkey=='affectionate nicknames'){
+           iconElem = "<i class=\"fas fa-smile detail_icon\"></i>"
           }
           var newElemSelector = ""+key+"_"+subkey
           console.log(newElemSelector)
           $(selector).append("<span id=\""+newElemSelector+"\" class=\"icon icon-"+subkey+"\">"+iconElem+nameProps[subkey]+ " "+subkey+ "</span>");
         })
       })
-      // for(var name in data){
-      //   console.log("[[[[[[[]]]]]]]");
-      //   console.log(name, data[name])
-      //   for(var prop in name){
-
-      //     var selector = "#"+data[name]+"_info .details"
-      //     var newElemSelector = ""+data[name]+"_"+name[prop]
-      //     console.log(selector, newElemSelector)
-      //     // $(selector).append("<span id=\""+newElemSelector+"\">"+name[prop]+"</span>");
-      //   }
-      // }
     });
-     
+
 
 
 
     // Perform other work here ...
-     
+
     // Set another completion function for the request above
   </script>
   <header>

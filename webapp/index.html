@@ -6,6 +6,7 @@
   <meta name="author" content="Revant Ohri">
 
   <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600">
   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
   <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script> <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.4/nv.d3.min.js"></script>
@@ -118,7 +119,7 @@
       var heatChart = d3.eesur.heatmap()
           .colourRangeStart('#FDBB30')
           .colourRangeEnd('#EE3124')
-          .startYear('2016')
+          .startYear('2015')
           .endYear('2019')
           .on('_hover', function (d, i) {
               var f = d3.time.format('%B %d, %Y');
@@ -191,7 +192,7 @@
       var heatChart = d3.eesur.heatmap()
           .colourRangeStart('#96c93d')
           .colourRangeEnd('#00b09b')
-          .startYear('2016')
+          .startYear('2015')
           .endYear('2019')
           .on('_hover', function (d, i) {
               var f = d3.time.format('%B %d, %Y');

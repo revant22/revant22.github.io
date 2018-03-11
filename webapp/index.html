@@ -85,9 +85,10 @@
           else if(subkey=='affectionate nicknames'){
            iconElem = "<i class=\"fas fa-smile detail_icon\"></i>"
           }
+          textElem = '<span>'+nameProps[subkey]+' '+ subkey+'</span>'
           var newElemSelector = ""+key+"_"+subkey
           console.log(newElemSelector)
-          $(selector).append("<span id=\""+newElemSelector+"\" class=\"icon icon-"+subkey+"\">"+iconElem+nameProps[subkey]+ " "+subkey+ "</span>");
+          $(selector).append("<span id=\""+newElemSelector+"\" class=\"icon icon-"+subkey+"\">"+iconElem+ textElem+ "</span>");
         })
       })
     });

@@ -5,6 +5,8 @@ body {
   line-height: 1.5;
   font-weight: 400;
 }
+
+
 .day {
   fill: #a5a5a5;
   stroke: white;
@@ -74,15 +76,16 @@ body {
 .tongue-smiley:before {
   content: ':P';
 }
-.detail_icon{
+i.detail_icon{
   margin-right: 10px;
+  line-height: 24px;
 }
 .details{
   border-left: white 2px solid;
   padding-left: 10px;
 }
 .details span{
-  display: block;
+  display: flex;
 }
 #main_container {
   min-width: 600px
@@ -130,4 +133,28 @@ svg text {
   font-size: 11px;
   text-transform: uppercase;
   fill: #070708;
+}
+
+@media (hover: none) {
+  #main_container {
+    display: none;
+  }
+  header {
+    display: none;
+  }
+  .info_containier {
+    display: block;
+  }
+  .details{
+    border: none;
+  }
+  #heatmap_container {
+    display: block;
+  }
+  .heatmap_holder{
+    width:100%;
+  }
+  .heatmap_holder:first-child{
+    width:100%;
+  }
 }
